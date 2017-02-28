@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Vue Sidebar Component Example</title>
+  <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <div id="app">
+
+    <sidebar main-title="Sidebar" sub-title="Example" :routes="routes"></sidebar>
+    
+    <div style="margin-left:150px">
+      <router-view></router-view>
+    </div>
+
+  </div>
+
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="//cdn.bootcss.com/vue/1.0.28/vue.min.js"></script>
+<script src="//cdn.bootcss.com/vue-router/0.7.13/vue-router.min.js"></script>
+<script src="./dist/vue-sidebar-component.min.js"></script>
+<script>
+// setup
+Vue.use(VueRouter);
+Vue.config.devtools = true;
+
+var routes = {
+  '*': {
+    component: {
+      template: '<div>404 NOT FOUND</div>'
+    }
+  },
+  '/': {
+    title: 'Home',
+    icon: 'fa fa-home',
+    showInSidebar: true,
+    component: {
+      template: '<div>Home</div>'
+    }
+  },
+  '/dashboard': {
+    title: 'Dashboard',
+    icon: 'fa fa-tachometer',
+    showInSidebar: true,
+    component: {
+      template: '<div>Dashboard</div>'
+    }
+  },
+  '/product': {
+    title: 'Product',
+    icon: 'fa fa-cubes',
+    showInSidebar: true,
+    component: {
+      template: '<div>Product <router-view></router-view></div>'
+    },
+    subRoutes: {
+      '/tv': {
+        title: 'TV',
+        icon: 'fa fa-television',
+        showInSidebar: true,
+        component: {
+          template: '<div>TV</div>'
+        }
+      },
+      '/pc': {
+        title: 'PC',
+        icon: 'fa fa-laptop',
+        showInSidebar: true,
+        component: {
+          template: '<div>PC</div>'
+        }
+      },
+      '/mobile': {
+        title: 'Mobile',
+        icon: 'fa fa-mobile',
+        showInSidebar: true,
+        component: {
+          template: '<div>Mobile</div>'
+        }
+      }
+    }
+  },
+  '/user': {
+    title: 'User',
+    icon: 'fa fa-user',
+    showInSidebar: true,
+    component: {
+      template: '<div>User <router-view></router-view></div>'
+    },
+    subRoutes: {
+      '/profile': {
+        title: 'Profile',
+        icon: 'fa fa-id-card-o',
+        showInSidebar: true,
+        component: {
+          template: '<div>Profile</div>'
+        }
+      },
+      '/help': {
+        title: 'Help',
+        icon: 'fa fa-info-circle',
+        showInSidebar: true,
+        component: {
+          template: '<div>Help</div>'
+        }
+      },
+      '/logout': { // would not show in sidebar
+        title: 'Logout',
+        component: {
+          template: '<div>Logout</div>'
+        }
+      }
+    }
+  }
+};
+
+// root component
+var App = {
+  components: { Sidebar: VueSidebar },
+  data: function () {
+    return { routes: routes };
+  }
+};
+
+// run app!
+var router = new VueRouter();
+router.map(routes);
+router.start(App, '#app');
+</script>
+</body>
+</html>
